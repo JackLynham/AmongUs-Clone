@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
     //Variables 
     Rigidbody rb;
     Transform tr;
+    Animator anim; 
+
     //Movment Values
     [SerializeField] InputAction WASD;
     Vector2 movement;
@@ -30,6 +32,8 @@ using UnityEngine.InputSystem;
     {
         rb = GetComponent<Rigidbody>();
         tr = transform.GetChild(0);
+
+        anim = GetComponent<Animator>(); 
     }
 
     private void Update()
@@ -42,6 +46,8 @@ using UnityEngine.InputSystem;
             //Always returns a value of -1 or 1 So players dont get Squished 
             tr.localScale = new Vector2(Mathf.Sign(movement.x), 1);
         }
+
+        anim.SetFloat("Speed", movement.magnitude);
     }
 
     private void FixedUpdate()

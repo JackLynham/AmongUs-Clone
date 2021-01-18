@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1046290221047256908}
   - component: {fileID: 1046290221047256909}
   - component: {fileID: 1046290221047256910}
+  - component: {fileID: 934945828129294285}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -63,6 +64,25 @@ CapsuleCollider:
   m_Height: 1.0613723
   m_Direction: 1
   m_Center: {x: 0.017048001, y: -0.03068614, z: 0}
+--- !u!95 &934945828129294285
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046290221047256911}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3f3667a3a39291543b0de38aafae8b72, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1046290222405474012
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,6 +129,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -190,6 +212,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
