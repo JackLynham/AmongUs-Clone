@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-    public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] bool hasControl;
@@ -14,7 +14,7 @@ using UnityEngine.InputSystem;
     //Variables 
     Rigidbody rb;
     Transform tr;
-    Animator anim; 
+    Animator anim;
 
     //Movment Values
     [SerializeField] InputAction WASD;
@@ -29,15 +29,15 @@ using UnityEngine.InputSystem;
     [SerializeField] bool isImposter;
     [SerializeField] InputAction KILL;
 
-    PlayerMovement target;
+    List<PlayerMovement> targets;
     [SerializeField] Collider myCollider;
 
     bool isDead;
 
-
+    [SerializeField] GameObject bodyPrefab;
     private void Awake()
     {
-        KILL.performed += KillTarget; 
+        KILL.performed += KillTarget;
     }
 
     private void OnEnable()
@@ -45,7 +45,7 @@ using UnityEngine.InputSystem;
         WASD.Enable();
         KILL.Enable();
     }
-    
+
     private void OnDisable()
     {
         WASD.Disable();
@@ -55,13 +55,14 @@ using UnityEngine.InputSystem;
 
     private void Start()
     {
-        
-        if(hasControl == true)
+
+        if (hasControl == true)
         {
             localPLayer = this;
         }
+        //init Our targets list
+        targets = new List<PlayerMovement>();
 
-        
         rb = GetComponent<Rigidbody>();
         tr = transform.GetChild(0);
         anim = GetComponent<Animator>();
@@ -69,15 +70,15 @@ using UnityEngine.InputSystem;
         mySprite = tr.GetComponent<SpriteRenderer>();
 
         //If no Color Set to white
-        if(color == Color.clear)
-        
-            color = Color.white; 
-         
-        if(!hasControl)
-        
+        if (color == Color.clear)
+
+            color = Color.white;
+
+        if (!hasControl)
+
             return;
         mySprite.color = color;
-      
+
     }
 
     private void Update()
@@ -105,7 +106,7 @@ using UnityEngine.InputSystem;
     {
         color = newColor;
         //If Sprite color is not null update the color 
-        if(mySprite != null)
+        if (mySprite != null)
         {
             mySprite.color = color;
         }
@@ -118,51 +119,70 @@ using UnityEngine.InputSystem;
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag== "Player")
+        if (other.tag == "Player")
         {
             //Get Movement Script from the other player 
             PlayerMovement tempTarget = other.GetComponent<PlayerMovement>();
 
-            if(isImposter)
+            if (isImposter)
             {
                 if (tempTarget.isImposter)
                     //If Target player is imposter dont kill him 
                     return;
                 else
                 {
-                    target = tempTarget;
+                    //Adds players to list
+                    targets.Add ( tempTarget);
                 }
-                
+
             }
         }
     }
-     void KillTarget(InputAction.CallbackContext context)
+
+    private void OnTriggerExit(Collider other)
     {
-        //Checks to see if kill has been preformed 
-        if(context.phase == InputActionPhase.Performed)
+        //removes A player from the Kill list if they move out of range 
+        if (other.tag == "Player")
         {
-            if (target == null)
-                return;
-
-            else
+            PlayerMovement tempTarget = other.GetComponent<PlayerMovement>();
+            if (targets.Contains(tempTarget))
             {
-                if (target.isDead)
-                    return;
-                transform.position = target.transform.position;
-                target.Die();
-                target = null;
-
+                targets.Remove(tempTarget);
             }
         }
     }
 
-    public void Die()
-    {
-        isDead = true;
-        anim.SetBool("IsDead", isDead);
-        myCollider.enabled = false;
+        void KillTarget(InputAction.CallbackContext context)
+        {
+            //Checks to see if kill has been preformed 
+            if (context.phase == InputActionPhase.Performed)
+            {
+                if (targets.Count == 0)
+                    return;
+
+                else
+                {//Always one more than the index by default 
+                    if (targets[targets.Count - 1].isDead)
+                        return;
+                    transform.position = targets[targets.Count - 1].transform.position;
+                    targets[targets.Count - 1].Die();
+                    targets.RemoveAt(targets.Count - 1);
+
+                }
+            }
+        }
+
+        public void Die()
+        {
+            isDead = true;
+            anim.SetBool("IsDead", isDead);
+            myCollider.enabled = false;
+        //Gets object and makes sure it has the script attached 
+        Deadbody tempBody = Instantiate(bodyPrefab, transform.position, 
+            transform.rotation).GetComponent<Deadbody>();
+
+        tempBody.SetColor(mySprite.color);
+
+        }
+
     }
-
-
-
-}

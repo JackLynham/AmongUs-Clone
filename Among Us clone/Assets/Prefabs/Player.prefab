@@ -206,6 +206,8 @@ MonoBehaviour:
       m_Action: KILL
       m_Flags: 0
   myCollider: {fileID: 1046290221047256910}
+  bodyPrefab: {fileID: 4696261714519899926, guid: affa52710e6751c4897542fbdbe72385,
+    type: 3}
 --- !u!212 &3117012570051689076
 SpriteRenderer:
   m_ObjectHideFlags: 0
