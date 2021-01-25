@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
     public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] bool hasControl;
 
     public static PlayerMovement localPLayer;
-
 
     //Variables 
     Rigidbody rb;
@@ -25,16 +25,31 @@ using UnityEngine.InputSystem;
     static Color color;
     SpriteRenderer mySprite;
 
+    //Roles
+    [SerializeField] bool isImposter;
+    [SerializeField] InputAction KILL;
+
+    PlayerMovement target;
+    [SerializeField] Collider myCollider;
+
+    bool isDead;
+
+
+    private void Awake()
+    {
+        KILL.performed += KillTarget; 
+    }
+
     private void OnEnable()
     {
         WASD.Enable();
-
+        KILL.Enable();
     }
-
-
+    
     private void OnDisable()
     {
         WASD.Disable();
+        KILL.Disable();
     }
 
 
@@ -52,16 +67,23 @@ using UnityEngine.InputSystem;
         anim = GetComponent<Animator>();
 
         mySprite = tr.GetComponent<SpriteRenderer>();
+
         //If no Color Set to white
         if(color == Color.clear)
-        {
-            color = Color.white;
-            mySprite.color = color;
-        }
+        
+            color = Color.white; 
+         
+        if(!hasControl)
+        
+            return;
+        mySprite.color = color;
+      
     }
 
     private void Update()
     {
+        if (!hasControl)
+            return;
         movement = WASD.ReadValue<Vector2>();
 
         //Are we moving left or right 
@@ -88,4 +110,59 @@ using UnityEngine.InputSystem;
             mySprite.color = color;
         }
     }
+
+    public void SetRole(bool newRole)
+    {
+        isImposter = newRole;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag== "Player")
+        {
+            //Get Movement Script from the other player 
+            PlayerMovement tempTarget = other.GetComponent<PlayerMovement>();
+
+            if(isImposter)
+            {
+                if (tempTarget.isImposter)
+                    //If Target player is imposter dont kill him 
+                    return;
+                else
+                {
+                    target = tempTarget;
+                }
+                
+            }
+        }
+    }
+     void KillTarget(InputAction.CallbackContext context)
+    {
+        //Checks to see if kill has been preformed 
+        if(context.phase == InputActionPhase.Performed)
+        {
+            if (target == null)
+                return;
+
+            else
+            {
+                if (target.isDead)
+                    return;
+                transform.position = target.transform.position;
+                target.Die();
+                target = null;
+
+            }
+        }
+    }
+
+    public void Die()
+    {
+        isDead = true;
+        anim.SetBool("IsDead", isDead);
+        myCollider.enabled = false;
+    }
+
+
+
 }
