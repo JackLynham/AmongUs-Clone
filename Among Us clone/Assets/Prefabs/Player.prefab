@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 1753267709}
   - component: {fileID: 3117012570051689076}
   - component: {fileID: 7135484821544051914}
-  m_Layer: 0
+  - component: {fileID: 2407729556119930519}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -272,6 +273,30 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2407729556119930519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046290221047256911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47242baf36b977642969b32883ee2f0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mask:
+    serializedVersion: 2
+    m_Bits: 256
+  getRadius: 20
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 512
+  sceneObjects: []
+  lightRays: {fileID: 0}
+  offset: 0.5
+  showRed: 1
+  showGreen: 1
 --- !u!1 &1046290222405474012
 GameObject:
   m_ObjectHideFlags: 0
