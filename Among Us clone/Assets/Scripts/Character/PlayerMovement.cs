@@ -213,7 +213,7 @@ public class PlayerMovement : MonoBehaviour
             RaycastHit hit;
             //The direction between the Player and a body 
             Ray ray = new Ray(transform.position, body.position - transform.position);
-            Debug.DrawRay(transform.position, body.position - transform.position, Color.cyan);
+            //Debug.DrawRay(transform.position, body.position - transform.position, Color.cyan);
 
             //If it Finds a body it returns true 
             if (Physics.Raycast(ray, out hit, 1000f, ~ignoreForBody))

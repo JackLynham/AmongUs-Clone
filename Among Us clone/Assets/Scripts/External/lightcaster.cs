@@ -124,7 +124,7 @@ public class lightcaster : MonoBehaviour
                 }
                 if(showGreen)
                 {
-                    Debug.DrawLine(transform.position, hit2.point, Color.green);		
+                   Debug.DrawLine(transform.position, hit2.point, Color.green);		
                 }	
 
 		    }
