@@ -209,6 +209,25 @@ MonoBehaviour:
   myCollider: {fileID: 1046290221047256910}
   bodyPrefab: {fileID: 4696261714519899926, guid: affa52710e6751c4897542fbdbe72385,
     type: 3}
+  REPORT:
+    m_Name: REPORT
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 46050a59-9097-49ba-a870-382561597943
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: f9f9337c-01f4-4bd5-b740-75540cad5af2
+      m_Path: <Keyboard>/r
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: REPORT
+      m_Flags: 0
+  ignoreForBody:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!212 &3117012570051689076
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -288,7 +307,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 256
-  getRadius: 20
+  getRadius: 1000
   wallMask:
     serializedVersion: 2
     m_Bits: 512

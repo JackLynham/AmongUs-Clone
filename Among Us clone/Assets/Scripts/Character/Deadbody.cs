@@ -11,4 +11,18 @@ public class Deadbody : MonoBehaviour
     {
         bodySprite.color = newColor;  // Sets body as same color as player 
     }
-}
+
+    private void OnEnable()
+    {
+        if(PlayerMovement.allBodies != null)
+        {
+            PlayerMovement.allBodies.Add(transform);
+        }
+    }
+
+    public void Report()
+    {
+        Debug.Log("Body Reported"); 
+        Destroy(gameObject);
+    }
+}   
