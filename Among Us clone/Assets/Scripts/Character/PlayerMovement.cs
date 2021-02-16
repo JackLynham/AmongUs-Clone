@@ -196,6 +196,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isDead = true;
         anim.SetBool("IsDead", isDead);
+        gameObject.layer = 10;
         myCollider.enabled = false;
         //Gets object and makes sure it has the script attached 
         Deadbody tempBody = Instantiate(bodyPrefab, transform.position,
